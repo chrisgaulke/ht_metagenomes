@@ -350,51 +350,53 @@ for(i in 1:length(sample_types)){
 
 # Write: Combined Files ------------------------------------------------
 
-write.table(file = "analysis/flat_files/combined_metadata.txt",
-            x = combined_metadata,
-            sep = "\t",
-            row.names = F,
-            col.names = T,
-            quote = F
-)
+#this gets run once
 
-write.table(file = "analysis/flat_files/combined_kraken2.txt",
-            x = combined_kraken,
-            sep = "\t",
-            row.names = F,
-            col.names = T,
-            quote = F
-)
-
-write.table(file = "analysis/flat_files/combined_metaphlan.txt",
-            x = combined.metaphlan,
-            sep = "\t",
-            row.names = F,
-            col.names = T,
-            quote = F
-)
-
-write.table(file = "analysis/flat_files/combined_gene.txt",
-            x = combined.gene,
-            sep = "\t",
-            row.names = F,
-            col.names = T,
-            quote = F
-)
-
-
-write.table(file = "analysis/flat_files/cleaned_seq_stats.txt",
-            x = combined.seq_stats,
-            sep = "\t",
-            row.names = T,
-            col.names = T,
-            quote = F
-)
-
-write.table(file = "analysis/flat_files/multiqc_stats.txt",
-            x = combined_multiqc,
-            sep = "\t",
-            row.names = T,
-            col.names = T,
-            quote = F
-)
+# write.table(file = "analysis/flat_files/combined_metadata.txt",
+#             x = combined_metadata,
+#             sep = "\t",
+#             row.names = F,
+#             col.names = T,
+#             quote = F
+# )
+#
+# write.table(file = "analysis/flat_files/combined_kraken2.txt",
+#             x = combined_kraken,
+#             sep = "\t",
+#             row.names = F,
+#             col.names = T,
+#             quote = F
+# )
+#
+# write.table(file = "analysis/flat_files/combined_metaphlan.txt",
+#             x = combined.metaphlan,
+#             sep = "\t",
+#             row.names = F,
+#             col.names = T,
+#             quote = F
+# )
+#
+# write.table(file = "analysis/flat_files/combined_gene.txt",
+#             x = combined.gene,
+#             sep = "\t",
+#             row.names = F,
+#             col.names = T,
+#             quote = F
+# )
+#
+#
+# write.table(file = "analysis/flat_files/cleaned_seq_stats.txt",
+#             x = combined.seq_stats,
+#             sep = "\t",
+#             row.names = T,
+#             col.names = T,
+#             quote = F
+# )
+#
+# write.table(file = "analysis/flat_files/multiqc_stats.txt",
+#             x = combined_multiqc,
+#             sep = "\t",
+#             row.names = T,
+#             col.names = T,
+#             quote = F
+# )

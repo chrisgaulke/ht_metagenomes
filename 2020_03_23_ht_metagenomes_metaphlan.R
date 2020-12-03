@@ -3,7 +3,7 @@
 #Date: 2020-03-23
 #Project: HT Metagenomes
 
-#This script will conduct high level analyses of metaphlan data
+#This script will conduct analyses of metaphlan data
 
 # Environment: Packages and options ----------------------------------------
 library(ggplot2)
@@ -97,9 +97,9 @@ split_parsed <- function(df, metadata, cn="Type", xtype){
   temp.obj <- NULL
 
   select.names <- rownames(metadata[which(metadata[,cn] == xtype),])
-  temp.metadf <- combined_metadata.df[which(rownames(combined_metadata.df) %in% select.names),]
-  my.df <- combined.parsed[,which(colnames(combined.parsed) %in%
-                                    c(colnames(combined.parsed)[1:10], select.names))]
+  temp.metadf <- metadata[which(rownames(metadata) %in% select.names),]
+  my.df <- df[,which(colnames(df) %in%
+                                    c(colnames(df)[1:10], select.names))]
 
   my.df <- my.df[which(rowSums(my.df[,11:ncol(my.df)]) > 0),]
 
@@ -110,19 +110,21 @@ split_parsed <- function(df, metadata, cn="Type", xtype){
 }
 
 # Data: Import data -------------------------------------------------------
+
 combined_metaphlan.df <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metaphlan.txt",
+  "analysis/flat_files/combined_metaphlan.txt",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 combined_metadata.df <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metadata.txt",
+  "analysis/flat_files/combined_metadata.txt",
   sep = "\t",
   header = T,
   comment.char = ""
 )
+
 rownames(combined_metadata.df) <- combined_metadata.df$Sample.ID
 colnames(combined_metadata.df) <- c("Sample", "Kit", "Input", "Type")
 
@@ -194,7 +196,7 @@ ra <-
 
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_metaphlan_pca.pdf")
+pdf("analysis/figs/mock_metaphlan_pca.pdf")
 mock.pca_plot +
   geom_point(size = 4, alpha = .8)+
   theme(text = element_text(size=18, colour = "black"),
@@ -242,7 +244,7 @@ ta <-
                                   )
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_cor_heatmap.pdf")
+pdf("analysis/figs/mock_cor_heatmap.pdf")
 Heatmap(mock.split$cor,
         top_annotation = ta,
         col = RColorBrewer::brewer.pal(9, "Purples"),
@@ -304,7 +306,7 @@ mock_intra.plot <- ggplot(mock.split$dist.intra,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_intraind_div.pdf")
+pdf("analysis/figs/mock_intraind_div.pdf")
 
 mock_intra.plot +
   geom_boxplot() +
@@ -330,7 +332,7 @@ mock_inter.plot <- ggplot(mock.split$dist.inter,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_interind_div.pdf")
+pdf("analysis/figs/mock_interind_div.pdf")
 
 mock_inter.plot +
   geom_boxplot() +
@@ -373,7 +375,7 @@ feces.pca_plot <- ggplot(feces.split$pca.scores,
                          )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_metaphlan_pca.pdf")
+pdf("analysis/figs/feces_metaphlan_pca.pdf")
 feces.pca_plot +
   geom_point(size = 4, alpha = .8)+
   theme(text = element_text(size=18, colour = "black"),
@@ -421,7 +423,7 @@ ta <-
     )
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_cor_heatmap.pdf")
+pdf("analysis/figs/feces_cor_heatmap.pdf")
 Heatmap(feces.split$cor,
         top_annotation = ta,
         col = RColorBrewer::brewer.pal(9, "Purples"),
@@ -482,7 +484,7 @@ feces_intra.plot <- ggplot(feces.split$dist.intra,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_intraind_div.pdf")
+pdf("analysis/figs/feces_intraind_div.pdf")
 
 feces_intra.plot +
   geom_boxplot() +
@@ -508,7 +510,7 @@ feces_inter.plot <- ggplot(feces.split$dist.inter,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_interind_div.pdf")
+pdf("analysis/figs/feces_interind_div.pdf")
 
 feces_inter.plot +
   geom_boxplot() +
@@ -551,7 +553,7 @@ soil.pca_plot <- ggplot(soil.split$pca.scores,
                         )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_metaphlan_pca.pdf")
+pdf("analysis/figs/soil_metaphlan_pca.pdf")
 soil.pca_plot +
   geom_point(size = 4, alpha = .8)+
   theme(text = element_text(size=18, colour = "black"),
@@ -620,7 +622,7 @@ ra <-
 
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_cor_heatmap.pdf")
+pdf("analysis/figs/soil_cor_heatmap.pdf")
 Heatmap(soil.split$cor,
         top_annotation = ta,
         col = colorRamp2(c(-1, 0, 1), c("#00441B", "white", "#40004B")),
@@ -683,7 +685,7 @@ soil_intra.plot <- ggplot(soil.split$dist.intra,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_intraind_div.pdf")
+pdf("analysis/figs/soil_intraind_div.pdf")
 
 soil_intra.plot +
   geom_boxplot() +
@@ -709,7 +711,7 @@ soil_inter.plot <- ggplot(soil.split$dist.inter,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_interind_div.pdf")
+pdf("analysis/figs/soil_interind_div.pdf")
 
 soil_inter.plot +
   geom_boxplot() +
@@ -752,7 +754,7 @@ coral.pca_plot <- ggplot(coral.split$pca.scores,
                          )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_metaphlan_pca.pdf")
+pdf("analysis/figs/coral_metaphlan_pca.pdf")
 coral.pca_plot +
   geom_point(size = 4, alpha = .8)+
   theme(text = element_text(size=18, colour = "black"),
@@ -821,7 +823,7 @@ ra <-
 
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_cor_heatmap.pdf")
+pdf("analysis/figs/coral_cor_heatmap.pdf")
 Heatmap(coral.split$cor,
         top_annotation = ta,
         col = colorRamp2(c(-1, 0, 1), c("#00441B", "white", "#40004B")),
@@ -884,7 +886,7 @@ coral_intra.plot <- ggplot(coral.split$dist.intra,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_intraind_div.pdf")
+pdf("analysis/figs/coral_intraind_div.pdf")
 
 coral_intra.plot +
   geom_boxplot() +
@@ -910,7 +912,7 @@ coral_inter.plot <- ggplot(coral.split$dist.inter,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_interind_div.pdf")
+pdf("analysis/figs/coral_interind_div.pdf")
 
 coral_inter.plot +
   geom_boxplot() +

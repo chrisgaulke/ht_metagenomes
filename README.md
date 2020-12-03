@@ -19,19 +19,19 @@ order with the exception of combine_data.R, which must be run first to generate
 the input files. The files are: 
 
 1. combine_data.R
-- combines individual input data files into one data frame and writes out these 
+  - combines individual input data files into one data frame and writes out these 
 data frames
 2. ht_metagenomes_seq_stats.R
--conducts stats on library and seqeunce quality
+  - conducts stats on library and seqeunce quality
 3. 2020_03_25_ht_metagenomes_genes.R
--conducts gene level analyses
+  - conducts gene level analyses
 4. ht_meta_tax_revised_2020_02_24.R
--conducts metaphlan vs mock analysis
+  - conducts metaphlan vs mock analysis
 5. 2020_01_16_kraken2_mock_analysis.R
--conducts kraken2 vs mock analysis
+  - conducts kraken2 vs mock analysis
 6. 2020_03_23_ht_metagenomes_metaphlan.R
-- conducts metaphlan taxonomic analysis 
+  - conducts metaphlan taxonomic analysis 
 7. 2020_04_02_ht_metagenomes_kraken2.R
-- conducts kraken taxonomic analysis 
+  - conducts kraken taxonomic analysis 
 
 

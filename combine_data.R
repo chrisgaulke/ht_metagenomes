@@ -23,7 +23,7 @@ make_tres <- function(vec) {
 
 # Data: Import Kraken2 -------------------------------------------------------------
 
-original_kraken <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/kraken2_merged.txt",
+original_kraken <- read.table("data/corrected_analysis/kraken2_merged.txt",
                               sep = "\t",
                               header = T,
                               row.names = NULL,
@@ -34,28 +34,28 @@ original_kraken <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenome
 # Data: Import Metaphlan -------------------------------------------------------------
 
 coral.metaphlan <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/coral_combined_metaphlan_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/coral_combined_metaphlan_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 soil.metaphlan <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/soil_combined_metaphlan_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/soil_combined_metaphlan_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 fecal.metaphlan <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/feces_combined_metaphlan_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/feces_combined_metaphlan_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 mock.metaphlan <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/mock_combined_metaphlan_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/mock_combined_metaphlan_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
@@ -64,28 +64,28 @@ mock.metaphlan <- read.table(
 # Data: Import Gene Data -------------------------------------------------------------
 
 coral.gene <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/coral_combined_gene_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/coral_combined_gene_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 soil.gene <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/soil_combined_gene_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/soil_combined_gene_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 fecal.gene <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/feces_combined_gene_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/feces_combined_gene_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 mock.gene <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/combined_tables/mock_combined_gene_families_cpm.tab",
+  "data/corrected_analysis/combined_tables/mock_combined_gene_families_cpm.tab",
   sep = "\t",
   header = T,
   comment.char = ""
@@ -93,14 +93,14 @@ mock.gene <- read.table(
 
 # Data: Import Metadata -----------------------------------------------------
 
-original_metadata <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/metadata/2020_01_16_metadata_all.txt",
+original_metadata <- read.table("data/metadata/2020_01_16_metadata_all.txt",
                                    sep = "\t",
                                    header = T
 )
 
 # Data: Import Sequence Statistics ------------------------------------------
 
-htmeta_seq_stats.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/clean_multiqc/output/R1/multiqc_data/multiqc_general_stats.txt",
+htmeta_seq_stats.df <- read.table("data/corrected_analysis/clean_multiqc/output/R1/multiqc_data/multiqc_general_stats.txt",
                                   sep = "\t",
                                   header = T,
                                   row.names = 1,
@@ -108,13 +108,13 @@ htmeta_seq_stats.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metage
 
 # Data: Import Multiqc ------------------------------------------
 
-multiqc_raw.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/raw_multiqc/R1/multiqc_data/multiqc_general_stats.txt",
+multiqc_raw.df <- read.table("data/corrected_analysis/raw_multiqc/R1/multiqc_data/multiqc_general_stats.txt",
                                   sep = "\t",
                                   header = T,
                                   row.names = 1,
                                   stringsAsFactors = F)
 
-multiqc_clean.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/corrected_analysis/clean_multiqc/output/R1/multiqc_data/multiqc_general_stats.txt",
+multiqc_clean.df <- read.table("data/corrected_analysis/clean_multiqc/output/R1/multiqc_data/multiqc_general_stats.txt",
                                   sep = "\t",
                                   header = T,
                                   row.names = 1,
@@ -350,7 +350,7 @@ for(i in 1:length(sample_types)){
 
 # Write: Combined Files ------------------------------------------------
 
-write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metadata.txt",
+write.table(file = "analysis/flat_files/combined_metadata.txt",
             x = combined_metadata,
             sep = "\t",
             row.names = F,
@@ -358,7 +358,7 @@ write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/
             quote = F
 )
 
-write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_kraken2.txt",
+write.table(file = "analysis/flat_files/combined_kraken2.txt",
             x = combined_kraken,
             sep = "\t",
             row.names = F,
@@ -366,7 +366,7 @@ write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/
             quote = F
 )
 
-write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metaphlan.txt",
+write.table(file = "analysis/flat_files/combined_metaphlan.txt",
             x = combined.metaphlan,
             sep = "\t",
             row.names = F,
@@ -374,7 +374,7 @@ write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/
             quote = F
 )
 
-write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_gene.txt",
+write.table(file = "analysis/flat_files/combined_gene.txt",
             x = combined.gene,
             sep = "\t",
             row.names = F,
@@ -383,7 +383,7 @@ write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/
 )
 
 
-write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/cleaned_seq_stats.txt",
+write.table(file = "analysis/flat_files/cleaned_seq_stats.txt",
             x = combined.seq_stats,
             sep = "\t",
             row.names = T,
@@ -391,7 +391,7 @@ write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/
             quote = F
 )
 
-write.table(file = "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/multiqc_stats.txt",
+write.table(file = "analysis/flat_files/multiqc_stats.txt",
             x = combined_multiqc,
             sep = "\t",
             row.names = T,

@@ -1,4 +1,12 @@
-#kraken2 mock analysis
+#Title: 2020_01_16_kraken2_mock_analysis.R
+#Author(s): Christopher A Gaulke
+#Date: 2020-02-24 revised 2020-12-03
+#Project: HT Metagenomes
+
+#This script quantifies associations between the kraken2 microbial abundances
+# and the mock community theoretical abundances.
+
+# Environment: Packages and options ----------------------------------------
 
 library(ggplot2)
 library(vegan)
@@ -95,13 +103,12 @@ make_tres <- function(vec) {
 
 # IMPORT: Data ------------------------------------------------------------
 
-
-ht_metagenomes_metadata.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/metadata/2020_01_16_metadata_all.txt",
+ht_metagenomes_metadata.df <- read.table("analysis/flat_files/combined_metadata.txt",
                                          sep = "\t",
                                          header = T
                                          )
 
-ht_meta_kraken2.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/data/kraken2/merged_kraken2.txt",
+ht_meta_kraken2.df <- read.table("analysis/flat_files/combined_kraken2.txt",
                                  sep = "\t",
                                  header = T,
                                  row.names = NULL,
@@ -113,41 +120,44 @@ ht_meta_kraken2.df <- read.table("/Users/gaulkec/Chris/dev/R_projects/ht_metagen
 
 ht_meta_kraken2.parsed <- kraken2_parser(ht_meta_kraken2.df)
 
-#run only once
-mock.names <- paste0("s",
-        ht_metagenomes_metadata.df[which(ht_metagenomes_metadata.df$Sample.Type == "Mock"),
-                                   "Sample.ID"])
-
+#grab names to subset df
 mock.names <-
-  ht_metagenomes_metadata.df[which(ht_metagenomes_metadata.df$Sample.Type == "Mock"),
-                                                  "Sample.ID"]
+   ht_metagenomes_metadata.df[which(ht_metagenomes_metadata.df$Sample.Type == "Mock"),
+                                                   "Sample.ID"]
 
-#adds missing leading "0" so the numbers will match ## run only once##
-mock.names <- make_tres(mock.names)
-
+#add in the tax levels
 mock.names <- c(mock.names, colnames(ht_meta_kraken2.parsed)[1:10])
 
+#subset
 ht_meta_kraken2_parsed.mock <-
   ht_meta_kraken2.parsed[,which(colnames(ht_meta_kraken2.parsed) %in% mock.names)]
+
+# when combined we give an average of the plexwell samples which produces a
+# decimal. To keep things consistent we will round this decimal.
 
 for(i in 31:35){
   ht_meta_kraken2_parsed.mock[,i] <- round(ht_meta_kraken2_parsed.mock[,i], digits = 0)
 }
 
+#get rid of 0 sum taxa
 ht_meta_kraken2_parsed.mock <-
   ht_meta_kraken2_parsed.mock[which(rowSums(ht_meta_kraken2_parsed.mock[11:ncol(ht_meta_kraken2_parsed.mock)]) > 0),]
 
+#keep only species level data
 ht_meta_kraken2_parsed.mock <-
   ht_meta_kraken2_parsed.mock[which(ht_meta_kraken2_parsed.mock$level == "s"),]
 
+#rarefy (this is a little hacky but works)
+set.seed(731)
 ht_meta_kraken2_mock.species <-
   rrarefy(t(ht_meta_kraken2_parsed.mock[,11:ncol(ht_meta_kraken2_parsed.mock)]),
           sample = 100000)
 
-
+#recombine data
 ht_meta_kraken2_parsed.mock[,11:ncol(ht_meta_kraken2_parsed.mock)] <-
  t(ht_meta_kraken2_mock.species[1:nrow(ht_meta_kraken2_mock.species),])
 
+#filter 0 sum taxa again because we rarefied
 ht_meta_kraken2_parsed.mock <-
   ht_meta_kraken2_parsed.mock[which(rowSums(ht_meta_kraken2_parsed.mock[11:ncol(ht_meta_kraken2_parsed.mock)]) > 0),]
 
@@ -182,18 +192,18 @@ ht_meta_kraken2_parsed.melt <- melt(ht_meta_kraken2_parsed.final)
 
 
 mock_meta.df <- ht_metagenomes_metadata.df[which(ht_metagenomes_metadata.df$Sample.Type == "Mock"),]
-mock_meta.df$Sample.ID <- mock.names[1:50]
+mock_meta.df$Sample.ID <- mock.names[1:25]
 rownames(mock_meta.df) <- mock_meta.df$Sample.ID
 
-ht_meta_kraken2_parsed.melt$kit <- rep(mock_meta.df[unique(as.character(ht_meta_kraken2_parsed.melt$variable)), 2], times = rep(10,times = 50))
-ht_meta_kraken2_parsed.melt$conc <- rep(mock_meta.df[unique(as.character(ht_meta_kraken2_parsed.melt$variable)), 3], times = rep(10,times = 50))
-ht_meta_kraken2_parsed.melt$variable <- factor(ht_meta_kraken2_parsed.melt$variable, mock.names[1:50])
+ht_meta_kraken2_parsed.melt$kit <- rep(mock_meta.df[unique(as.character(ht_meta_kraken2_parsed.melt$variable)), 2], times = rep(10,times = 25))
+ht_meta_kraken2_parsed.melt$conc <- rep(mock_meta.df[unique(as.character(ht_meta_kraken2_parsed.melt$variable)), 3], times = rep(10,times = 25))
+ht_meta_kraken2_parsed.melt$variable <- factor(ht_meta_kraken2_parsed.melt$variable, mock.names[1:25])
 
 ht_meta_kraken2_parsed.melt <- ht_meta_kraken2_parsed.melt[order(ht_meta_kraken2_parsed.melt$variable),]
-ht_meta_kraken2_parsed.melt$truth <- rep(mock.actual, times = 50)
+ht_meta_kraken2_parsed.melt$truth <- rep(mock.actual, times = 25)
 
 
-pdf("~/Desktop/test.pdf", width = 11)
+#pdf("~/Desktop/test.pdf", width = 11)
 mock_corr_kraken2.plot <- ggplot(ht_meta_kraken2_parsed.melt,
                                aes(x = value,
                                    y = truth,
@@ -224,7 +234,7 @@ mock_corr_kraken2.plot <- ggplot(ht_meta_kraken2_parsed.melt,
   ylab("Count")+
   xlab("Count")+
   labs(shape = "Input (ng)", color= "Method")
-dev.off()
+#dev.off()
 
 
 # ANALYSIS: Full correlation ----------------------------------------------
@@ -244,6 +254,7 @@ ht_meta_kraken2_parsed.mock <-
 ht_meta_kraken2_parsed.mock <-
   ht_meta_kraken2_parsed.mock[which(ht_meta_kraken2_parsed.mock$level == "s"),]
 
+set.seed(731)
 ht_meta_kraken2_mock.species <-
   rrarefy(t(ht_meta_kraken2_parsed.mock[,11:ncol(ht_meta_kraken2_parsed.mock)]),
           sample = 100000)
@@ -319,7 +330,6 @@ ht_meta_kraken2_parsed.melt$variable <- factor(ht_meta_kraken2_parsed.melt$varia
                                                )
 
 
-#pdf("~/Desktop/test.pdf", width = 11)
 mock_corr_kraken2.plot <- ggplot(ht_meta_kraken2_parsed.melt,
                                  aes(x = value,
                                      y = truth,
@@ -348,18 +358,16 @@ mock_corr_kraken2.plot <-
     legend.text = element_text(size =16),
     legend.title = element_text(size = 18,face = "bold" )
   ) +
-  #scale_color_hue(h = c(0,360),l =45, c =100 )+
   ylab("Count")+
   xlab("Count")+
   labs(shape = "Input (ng)", color= "Method")
-#dev.off()
 
 
 mock_corr_kraken2_plots.build <- ggplot_build(mock_corr_kraken2.plot)
 mock_corr_kraken2_plots.build$data[[3]]$label <- round(ht_meta_kraken2_parsed.est.full[1:(length(ht_meta_kraken2_parsed.est.full))],2)
 x <- ggplot_gtable(mock_corr_kraken2_plots.build)
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_kraken_taxa_vs_truth_all_taxa.pdf", width = 16)
+pdf("analysis/figs/mock_kraken_taxa_vs_truth_all_taxa.pdf", width = 16)
 plot(x)
 dev.off()
 

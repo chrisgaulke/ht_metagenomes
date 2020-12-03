@@ -1,9 +1,9 @@
 #Title: 2020_04_02_ht_metagenomes_kraken2.R
 #Author(s): Christopher A Gaulke
-#Date: 2020-04-02
+#Date: 2020-04-02 revised
 #Project: HT Metagenomes
 
-#This script will conduct high level analyses of kraken data
+#This script will conduct analyses of kraken2 data
 
 # Environment: Packages and options ----------------------------------------
 library(ggplot2)
@@ -114,7 +114,7 @@ split_parsed <- function(df, metadata, cn="Type", xtype){
 
 # Data: Import data -------------------------------------------------------
 combined_kraken2.df <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_kraken2.txt",
+  "analysis/flat_files/combined_kraken2.txt",
   sep = "\t",
   header = T,
   row.names = NULL,
@@ -123,7 +123,7 @@ combined_kraken2.df <- read.table(
   )
 
 combined_metadata.df <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metadata.txt",
+  "analysis/flat_files/combined_metadata.txt",
   sep = "\t",
   header = T,
   comment.char = ""
@@ -178,7 +178,7 @@ mock.pca_plot <- ggplot(mock.split$pca.scores,
                         )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_kraken2_pca.pdf",
+pdf("analysis/figs/mock_kraken2_pca.pdf",
     height = 4)
 mock.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -249,7 +249,7 @@ ra <-
 
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_cor_heatmap_kraken2.pdf",
+pdf("analysis/figs/mock_cor_heatmap_kraken2.pdf",
     height = 5)
 Heatmap(mock.split$cor,
         top_annotation = ta,
@@ -312,7 +312,7 @@ mock_intra.plot <- ggplot(mock.split$dist.intra,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_intraind_div_kraken2.pdf",
+pdf("analysis/figs/mock_intraind_div_kraken2.pdf",
     height = 4)
 
 mock_intra.plot +
@@ -339,7 +339,7 @@ mock_inter.plot <- ggplot(mock.split$dist.inter,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_interind_div_kraken2.pdf",
+pdf("analysis/figs/mock_interind_div_kraken2.pdf",
     height = 4)
 
 mock_inter.plot +
@@ -383,7 +383,7 @@ feces.pca_plot <- ggplot(feces.split$pca.scores,
                          )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_kraken2_pca.pdf",
+pdf("analysis/figs/feces_kraken2_pca.pdf",
     height = 4)
 feces.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -454,7 +454,7 @@ ra <-
   )
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_cor_heatmap_kraken2.pdf",
+pdf("analysis/figs/feces_cor_heatmap_kraken2.pdf",
     height = 5)
 Heatmap(feces.split$cor,
         top_annotation = ta,
@@ -518,7 +518,7 @@ feces_intra.plot <- ggplot(feces.split$dist.intra,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_intraind_div_kraken2.pdf",
+pdf("analysis/figs/feces_intraind_div_kraken2.pdf",
     height = 4)
 
 feces_intra.plot +
@@ -545,7 +545,7 @@ feces_inter.plot <- ggplot(feces.split$dist.inter,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_interind_div_kraken2.pdf",
+pdf("analysis/figs/feces_interind_div_kraken2.pdf",
     height = 4)
 
 feces_inter.plot +
@@ -589,7 +589,7 @@ soil.pca_plot <- ggplot(soil.split$pca.scores,
                         )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_kraken2_pca.pdf",
+pdf("analysis/figs/soil_kraken2_pca.pdf",
     height = 4)
 soil.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -660,7 +660,7 @@ ra <-
 
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_cor_heatmap_kraken2.pdf",
+pdf("analysis/figs/soil_cor_heatmap_kraken2.pdf",
     height = 5)
 Heatmap(soil.split$cor,
         top_annotation = ta,
@@ -723,7 +723,7 @@ soil_intra.plot <- ggplot(soil.split$dist.intra,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_intraind_div_kraken2.pdf",
+pdf("analysis/figs/soil_intraind_div_kraken2.pdf",
     height = 4)
 
 soil_intra.plot +
@@ -750,7 +750,7 @@ soil_inter.plot <- ggplot(soil.split$dist.inter,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_interind_div_kraken2.pdf",
+pdf("analysis/figs/soil_interind_div_kraken2.pdf",
     height = 4)
 
 soil_inter.plot +
@@ -794,7 +794,7 @@ coral.pca_plot <- ggplot(coral.split$pca.scores,
                          )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_kraken2_pca.pdf",
+pdf("analysis/figs/coral_kraken2_pca.pdf",
     height = 4)
 coral.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -864,7 +864,7 @@ ra <-
 
   )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_cor_heatmap_kraken2.pdf",
+pdf("analysis/figs/coral_cor_heatmap_kraken2.pdf",
     height = 5)
 Heatmap(coral.split$cor,
         top_annotation = ta,
@@ -927,7 +927,7 @@ coral_intra.plot <- ggplot(coral.split$dist.intra,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_intraind_div_kraken2.pdf",
+pdf("analysis/figs/coral_intraind_div_kraken2.pdf",
     height = 4)
 
 coral_intra.plot +
@@ -954,7 +954,7 @@ coral_inter.plot <- ggplot(coral.split$dist.inter,
                                y = value,
                                fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_interind_div_kraken2.pdf",
+pdf("analysis/figs/coral_interind_div_kraken2.pdf",
     height = 4)
 
 coral_inter.plot +

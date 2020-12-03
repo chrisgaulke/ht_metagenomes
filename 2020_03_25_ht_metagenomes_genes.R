@@ -1,9 +1,9 @@
 #Title: 2020_03_25_ht_metagenomes_genes.R
 #Author(s): Christopher A Gaulke
-#Date: 2020-03-25
+#Date: 2020-03-25 revised 2020-12-03
 #Project: HT Metagenomes
 
-#This script will conduct high level analyses of metaphlan data
+#This script will conduct high level analyses of metagenome gene data
 
 # Environment: Packages and options ----------------------------------------
 library(ggplot2)
@@ -15,22 +15,22 @@ library(RColorBrewer)
 options("stringsAsFactors"=F)
 
 # Data: Import data -------------------------------------------------------
+
 combined_gene.df <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_gene.txt",
+  "analysis/flat_files/combined_gene.txt",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 combined_metadata.df <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metadata.txt",
+  "analysis/flat_files/combined_metadata.txt",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 rownames(combined_metadata.df) <- combined_metadata.df$Sample.ID
 colnames(combined_metadata.df) <- c("Sample", "Kit", "Input", "Type")
-
 
 # Analysis: Grab top level ---------------------------------------------------
 
@@ -111,7 +111,7 @@ mock_gene.pca_plot <- ggplot(mock_gene.obj$pca.scores,
                         )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_gene_pca.pdf",
+pdf("analysis/figs/mock_gene_pca.pdf",
     height = 4)
 mock_gene.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -185,7 +185,7 @@ ra <-
   )
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_gene_cor_heatmap.pdf",
+pdf("analysis/figs/mock_gene_cor_heatmap.pdf",
     height = 5)
 Heatmap(mock_gene.obj$cor,
         top_annotation = ta,
@@ -249,7 +249,7 @@ mock_gene_intra.plot <- ggplot(mock_gene.obj$dist.intra,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_gene_intraind_div.pdf",
+pdf("analysis/figs/mock_gene_intraind_div.pdf",
     height = 4)
 
 mock_gene_intra.plot +
@@ -276,7 +276,7 @@ mock_gene_inter.plot <- ggplot(mock_gene.obj$dist.inter,
                               y = value,
                               fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_gene_interind_div.pdf",
+pdf("analysis/figs/mock_gene_interind_div.pdf",
     height = 4)
 
 mock_gene_inter.plot +
@@ -319,7 +319,7 @@ gene_richness.plot <- ggplot(mock_gene.obj$richness,
                                  color = kit,
                                  shape = factor(input)))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_gene_richness.pdf",
+pdf("analysis/figs/mock_gene_richness.pdf",
     height = 4)
 
 gene_richness.plot +
@@ -360,7 +360,7 @@ gene_shannon.plot <- ggplot(mock_gene.obj$shannon,
                                 shape = factor(input)))
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_gene_shannon.pdf",
+pdf("analysis/figs/mock_gene_shannon.pdf",
     height = 4)
 
 gene_shannon.plot +
@@ -399,7 +399,7 @@ feces_gene.pca_plot <- ggplot(feces_gene.obj$pca.scores,
                               )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_gene_pca.pdf",
+pdf("analysis/figs/feces_gene_pca.pdf",
     height = 4)
 feces_gene.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -474,7 +474,7 @@ ra <-
   )
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_gene_cor_heatmap.pdf",
+pdf("analysis/figs/feces_gene_cor_heatmap.pdf",
     height = 5)
 Heatmap(feces_gene.obj$cor,
         top_annotation = ta,
@@ -538,7 +538,7 @@ feces_gene_intra.plot <- ggplot(feces_gene.obj$dist.intra,
                                     y = value,
                                     fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_gene_intraind_div.pdf",
+pdf("analysis/figs/feces_gene_intraind_div.pdf",
     height = 4)
 
 feces_gene_intra.plot +
@@ -565,7 +565,7 @@ feces_gene_inter.plot <- ggplot(feces_gene.obj$dist.inter,
                                     y = value,
                                     fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_gene_interind_div.pdf",
+pdf("analysis/figs/feces_gene_interind_div.pdf",
     height = 4)
 
 feces_gene_inter.plot +
@@ -607,7 +607,7 @@ feces_gene_richness.plot <- ggplot(feces_gene.obj$richness,
                                        color = kit,
                                        shape = factor(input)))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_gene_richness.pdf",
+pdf("analysis/figs/feces_gene_richness.pdf",
     height = 4)
 
 feces_gene_richness.plot +
@@ -647,7 +647,7 @@ feces_gene_shannon.plot <- ggplot(feces_gene.obj$shannon,
                                       shape = factor(input)))
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/feces_gene_shannon.pdf",
+pdf("analysis/figs/feces_gene_shannon.pdf",
     height = 4)
 
 feces_gene_shannon.plot +
@@ -685,7 +685,7 @@ soil_gene.pca_plot <- ggplot(soil_gene.obj$pca.scores,
                              )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_gene_pca.pdf",
+pdf("analysis/figs/soil_gene_pca.pdf",
     height = 4)
 soil_gene.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -759,7 +759,7 @@ ra <-
   )
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_gene_cor_heatmap.pdf",
+pdf("analysis/figs/soil_gene_cor_heatmap.pdf",
     height = 5)
 Heatmap(soil_gene.obj$cor,
         top_annotation = ta,
@@ -823,7 +823,7 @@ soil_gene_intra.plot <- ggplot(soil_gene.obj$dist.intra,
                                    y = value,
                                    fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_gene_intraind_div.pdf",
+pdf("analysis/figs/soil_gene_intraind_div.pdf",
     height = 4)
 
 soil_gene_intra.plot +
@@ -850,7 +850,7 @@ soil_gene_inter.plot <- ggplot(soil_gene.obj$dist.inter,
                                    y = value,
                                    fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_gene_interind_div.pdf",
+pdf("analysis/figs/soil_gene_interind_div.pdf",
     height = 4)
 
 soil_gene_inter.plot +
@@ -892,7 +892,7 @@ soil_gene_richness.plot <- ggplot(soil_gene.obj$richness,
                                       color = kit,
                                       shape = factor(input)))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_gene_richness.pdf",
+pdf("analysis/figs/soil_gene_richness.pdf",
     height = 4)
 
 soil_gene_richness.plot +
@@ -935,7 +935,7 @@ soil_gene_shannon.plot <- ggplot(soil_gene.obj$shannon,
                                      shape = factor(input)))
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/soil_gene_shannon.pdf",
+pdf("analysis/figs/soil_gene_shannon.pdf",
     height = 4)
 
 soil_gene_shannon.plot +
@@ -975,7 +975,7 @@ coral_gene.pca_plot <- ggplot(coral_gene.obj$pca.scores,
                               )
 )
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_gene_pca.pdf",
+pdf("analysis/figs/coral_gene_pca.pdf",
     height = 4)
 coral_gene.pca_plot +
   geom_point(size = 4, alpha = .8)+
@@ -1050,7 +1050,7 @@ ra <-
   )
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_gene_cor_heatmap.pdf",
+pdf("analysis/figs/coral_gene_cor_heatmap.pdf",
     height = 5)
 Heatmap(coral_gene.obj$cor,
         top_annotation = ta,
@@ -1114,7 +1114,7 @@ coral_gene_intra.plot <- ggplot(coral_gene.obj$dist.intra,
                                     y = value,
                                     fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_gene_intraind_div.pdf",
+pdf("analysis/figs/coral_gene_intraind_div.pdf",
     height = 4)
 
 coral_gene_intra.plot +
@@ -1141,7 +1141,7 @@ coral_gene_inter.plot <- ggplot(coral_gene.obj$dist.inter,
                                     y = value,
                                     fill = v1kit))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_gene_interind_div.pdf",
+pdf("analysis/figs/coral_gene_interind_div.pdf",
     height = 4)
 
 coral_gene_inter.plot +
@@ -1184,7 +1184,7 @@ coral_gene_richness.plot <- ggplot(coral_gene.obj$richness,
                                  color = kit,
                                  shape = factor(input)))
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_gene_richness.pdf",
+pdf("analysis/figs/coral_gene_richness.pdf",
     height = 4)
 
 coral_gene_richness.plot +
@@ -1227,7 +1227,7 @@ coral_gene_shannon.plot <- ggplot(coral_gene.obj$shannon,
                                 shape = factor(input)))
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/coral_gene_shannon.pdf",
+pdf("analysis/figs/coral_gene_shannon.pdf",
     height = 4)
 
 coral_gene_shannon.plot +
@@ -1346,7 +1346,7 @@ cols <- c("NexteraFlex Reduced" = "#D95F02",
           "plexWell96" = "#E7298A",
           "QIASeqFX" = "#66A61E")
 
-png("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_comparison_to_netera_flex_full.png",
+png("analysis/figs/mock_comparison_to_netera_flex_full.png",
     res = 300, height = 5, width = 7, units = "in")
 scatter_genes.plot <- ggplot(lm_scatter.melt, aes(x = log(value),
                                                   y = log(y),
@@ -1377,108 +1377,109 @@ scatter_genes.plot +
 dev.off()
 
 
+#Crazy talk below here. Lets call this the end of the file.
 
-# now get the absolute value of the difference here. While I am not sure that
-# it matters (give abs()) which is subtracted I will use y-x.
-
-y05 <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 0.5),])
-y1  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 1.0),])
-y5  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 5.0),])
-
-
-#add small value to enable the next part
-mock_gene.obj$genes.lmplus <- mock_gene.obj$genes.lm[] + 0.001
-
-#make null df
-
-mock_gene_abs.df <- NULL
-
-#now populate df
-
-for(name in c("NextFlex RAPID XP",
-              "NexteraFlex Reduced",
-              "QIASeqFX",
-              "plexWell96")){
-
-  x05 <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 0.5),])
-  x1  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 1.0),])
-  x5  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 5.0),])
-
-  name.05 <- paste0(name, "_0.5")
-  name.1 <- paste0(name, "_1.0")
-  name.5 <- paste0(name, "_5.0")
-
-  #mock_gene_abs.df[[name.05]]  <- (mock_gene.obj$genes.lmplus[,y05] - mock_gene.obj$genes.lmplus[,x05]) / mock_gene.obj$genes.lmplus[,y05]
-  #mock_gene_abs.df[[name.1]]   <- (mock_gene.obj$genes.lmplus[,y1]  - mock_gene.obj$genes.lmplus[,x1]) / mock_gene.obj$genes.lmplus[,y1]
-  #mock_gene_abs.df[[name.5]]   <- (mock_gene.obj$genes.lmplus[,y5]  - mock_gene.obj$genes.lmplus[,x5]) / mock_gene.obj$genes.lmplus[,y5]
-  mock_gene_abs.df[[name.05]]  <-  mock_gene.obj$genes.lmplus[,x05] / mock_gene.obj$genes.lmplus[,y05]
-  mock_gene_abs.df[[name.1]]   <-  mock_gene.obj$genes.lmplus[,x1] / mock_gene.obj$genes.lmplus[,y1]
-  mock_gene_abs.df[[name.5]]   <-  mock_gene.obj$genes.lmplus[,x5] / mock_gene.obj$genes.lmplus[,y5]
-}
-
-
-#now make a data frame
-mock_gene_abs.df <- as.data.frame(mock_gene_abs.df)
-rownames(mock_gene_abs.df) <- rownames(mock_gene.obj$genes.lm)
-mock_gene_abs.df <- t(mock_gene_abs.df)
-mock_gene_abs.df <- as.data.frame(mock_gene_abs.df)
-
-#add metadata
-mock_gene_abs.df$kit <- rep(c("NextFlex RAPID XP",
-      "NexteraFlex Reduced",
-      "QIASeqFX",
-      "plexWell96"), times = rep (3,4 ))
-
-mock_gene_abs.df$input <- rep(c("0.5", "1.0", "5.0"), times = 4)
-
-#melt and reorder
-mock_gene_abs.melt <- melt(mock_gene_abs.df)
-mock_gene_abs.melt <- mock_gene_abs.melt[order(mock_gene_abs.melt$input),]
-
-#now add in the "truth for each
-
-mock_gene_abs.melt$y_abundance <- c(rep(mock_gene.obj$genes.lmplus[,y05], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus)))),
-rep(mock_gene.obj$genes.lmplus[,y1], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus)))),
-rep(mock_gene.obj$genes.lmplus[,y5], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus))))
-)
-
-#get names of genes with that a 2 sd beyond the mean for a group
-bottom_limit <- mean(mock_gene_abs.melt$value) - sd(mock_gene_abs.melt$value)*2
-top_limit    <- mean(mock_gene_abs.melt$value) + sd(mock_gene_abs.melt$value)*2
-
-select.families <- unique(mock_gene_abs.melt[which(mock_gene_abs.melt$value < bottom_limit | mock_gene_abs.melt$value > top_limit),"variable"])
-
-
-mock_gene_abs.melt <- mock_gene_abs.melt[which(mock_gene_abs.melt$variable %in% select.families),]
-
-
-mock_gene_abs.plot <- ggplot(mock_gene_abs.melt,
-                             aes(x = log10(value),
-                                 y = log10(y_abundance),
-                                 color = kit,
-                                 shape = factor(input)))
-
-
-mock_gene_abs.plot +
-  geom_point(alpha = 0.1) +
-  facet_wrap(.~input)+
-  geom_vline(xintercept = -(log10(abs(bottom_limit))), alpha = .7) +
-  geom_vline(xintercept = log10(top_limit), alpha = .7)
-
-
-
-
-mock_gene_abs.plot <- ggplot(mock_gene_abs.melt,
-                             aes(x = value,
-                                 y = y_abundance,
-                                 color = kit,
-                                 shape = factor(input)))
-
-
-mock_gene_abs.plot +
-  geom_point(alpha = 0.1) +
-  facet_wrap(.~input)
-
-geom_vline(xintercept = -(log10(abs(bottom_limit))), alpha = .7) +
-  geom_vline(xintercept = log10(top_limit), alpha = .7)
+# # now get the absolute value of the difference here. While I am not sure that
+# # it matters (give abs()) which is subtracted I will use y-x.
+#
+# y05 <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 0.5),])
+# y1  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 1.0),])
+# y5  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 5.0),])
+#
+#
+# #add small value to enable the next part
+# mock_gene.obj$genes.lmplus <- mock_gene.obj$genes.lm[] + 0.001
+#
+# #make null df
+#
+# mock_gene_abs.df <- NULL
+#
+# #now populate df
+#
+# for(name in c("NextFlex RAPID XP",
+#               "NexteraFlex Reduced",
+#               "QIASeqFX",
+#               "plexWell96")){
+#
+#   x05 <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 0.5),])
+#   x1  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 1.0),])
+#   x5  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 5.0),])
+#
+#   name.05 <- paste0(name, "_0.5")
+#   name.1 <- paste0(name, "_1.0")
+#   name.5 <- paste0(name, "_5.0")
+#
+#   #mock_gene_abs.df[[name.05]]  <- (mock_gene.obj$genes.lmplus[,y05] - mock_gene.obj$genes.lmplus[,x05]) / mock_gene.obj$genes.lmplus[,y05]
+#   #mock_gene_abs.df[[name.1]]   <- (mock_gene.obj$genes.lmplus[,y1]  - mock_gene.obj$genes.lmplus[,x1]) / mock_gene.obj$genes.lmplus[,y1]
+#   #mock_gene_abs.df[[name.5]]   <- (mock_gene.obj$genes.lmplus[,y5]  - mock_gene.obj$genes.lmplus[,x5]) / mock_gene.obj$genes.lmplus[,y5]
+#   mock_gene_abs.df[[name.05]]  <-  mock_gene.obj$genes.lmplus[,x05] / mock_gene.obj$genes.lmplus[,y05]
+#   mock_gene_abs.df[[name.1]]   <-  mock_gene.obj$genes.lmplus[,x1] / mock_gene.obj$genes.lmplus[,y1]
+#   mock_gene_abs.df[[name.5]]   <-  mock_gene.obj$genes.lmplus[,x5] / mock_gene.obj$genes.lmplus[,y5]
+# }
+#
+#
+# #now make a data frame
+# mock_gene_abs.df <- as.data.frame(mock_gene_abs.df)
+# rownames(mock_gene_abs.df) <- rownames(mock_gene.obj$genes.lm)
+# mock_gene_abs.df <- t(mock_gene_abs.df)
+# mock_gene_abs.df <- as.data.frame(mock_gene_abs.df)
+#
+# #add metadata
+# mock_gene_abs.df$kit <- rep(c("NextFlex RAPID XP",
+#       "NexteraFlex Reduced",
+#       "QIASeqFX",
+#       "plexWell96"), times = rep (3,4 ))
+#
+# mock_gene_abs.df$input <- rep(c("0.5", "1.0", "5.0"), times = 4)
+#
+# #melt and reorder
+# mock_gene_abs.melt <- melt(mock_gene_abs.df)
+# mock_gene_abs.melt <- mock_gene_abs.melt[order(mock_gene_abs.melt$input),]
+#
+# #now add in the "truth for each
+#
+# mock_gene_abs.melt$y_abundance <- c(rep(mock_gene.obj$genes.lmplus[,y05], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus)))),
+# rep(mock_gene.obj$genes.lmplus[,y1], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus)))),
+# rep(mock_gene.obj$genes.lmplus[,y5], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus))))
+# )
+#
+# #get names of genes with that a 2 sd beyond the mean for a group
+# bottom_limit <- mean(mock_gene_abs.melt$value) - sd(mock_gene_abs.melt$value)*2
+# top_limit    <- mean(mock_gene_abs.melt$value) + sd(mock_gene_abs.melt$value)*2
+#
+# select.families <- unique(mock_gene_abs.melt[which(mock_gene_abs.melt$value < bottom_limit | mock_gene_abs.melt$value > top_limit),"variable"])
+#
+#
+# mock_gene_abs.melt <- mock_gene_abs.melt[which(mock_gene_abs.melt$variable %in% select.families),]
+#
+#
+# mock_gene_abs.plot <- ggplot(mock_gene_abs.melt,
+#                              aes(x = log10(value),
+#                                  y = log10(y_abundance),
+#                                  color = kit,
+#                                  shape = factor(input)))
+#
+#
+# mock_gene_abs.plot +
+#   geom_point(alpha = 0.1) +
+#   facet_wrap(.~input)+
+#   geom_vline(xintercept = -(log10(abs(bottom_limit))), alpha = .7) +
+#   geom_vline(xintercept = log10(top_limit), alpha = .7)
+#
+#
+#
+#
+# mock_gene_abs.plot <- ggplot(mock_gene_abs.melt,
+#                              aes(x = value,
+#                                  y = y_abundance,
+#                                  color = kit,
+#                                  shape = factor(input)))
+#
+#
+# mock_gene_abs.plot +
+#   geom_point(alpha = 0.1) +
+#   facet_wrap(.~input)
+#
+# geom_vline(xintercept = -(log10(abs(bottom_limit))), alpha = .7) +
+#   geom_vline(xintercept = log10(top_limit), alpha = .7)
 

@@ -3,6 +3,9 @@
 #Date: 2020-02-24
 #Project: HT Metagenomes
 
+#This script quantifies associations between the metaphlan microbial abundances
+# and the mock community theoretical abundances.
+
 # Environment: Packages and options ----------------------------------------
 library(ggplot2)
 library(vegan)
@@ -82,21 +85,22 @@ metaphlan_parser <- function(df) {
 
 }
 
-
 # Data: Import data -------------------------------------------------------
+
 mock.metaphlan <- read.table(
-  "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metaphlan.txt",
+  "analysis/flat_files/combined_metaphlan.txt",
   sep = "\t",
   header = T,
   comment.char = ""
 )
 
 mock_metadata.df <- read.table(
-    "/Users/gaulkec/Chris/dev/R_projects/ht_metagenomes/analysis/flat_files/combined_metadata.txt",
+    "analysis/flat_files/combined_metadata.txt",
   sep = "\t",
   header = T,
   comment.char = ""
 )
+
 rownames(mock_metadata.df) <- mock_metadata.df$Sample.ID
 
 #get sample names for the mock community
@@ -149,7 +153,7 @@ mock_species_pca.df <- as.data.frame(mock_species_pca.df)
 mock_species_pca.df$group <- mock_metadata.df[rownames(mock_species_pca.df), "Prep.Kit"]
 
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_metaphlan_taxa_vs_truth_prcomp.pdf",width = 10)
+pdf("analysis/figs/mock_metaphlan_taxa_vs_truth_prcomp.pdf",width = 10)
 
 mock_species_pca.plot <- ggplot(mock_species_pca.df, aes(x = PC1,
                                                          y = PC2,
@@ -263,7 +267,7 @@ mock_corr_plots.build <- ggplot_build(mock_corr_plots.plot)
 mock_corr_plots.build$data[[3]]$label <- round(my_est[1:(length(my_est))],2)
 x <- ggplot_gtable(mock_corr_plots.build)
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_metaphlan_taxa_vs_truth.pdf", width = 16)
+pdf("analysis/figs/mock_metaphlan_taxa_vs_truth.pdf", width = 16)
 plot(x)
 dev.off()
 
@@ -401,6 +405,6 @@ mock_corr_plots.build <- ggplot_build(mock_corr_plots.plot)
 mock_corr_plots.build$data[[3]]$label <- round(my_est[1:(length(my_est))],2)
 x <- ggplot_gtable(mock_corr_plots.build)
 
-pdf("~/Chris/dev/R_projects/ht_metagenomes/analysis/mock_metaphlan_taxa_vs_truth_all_taxa.pdf", width = 16)
+pdf("analysis/figs/mock_metaphlan_taxa_vs_truth_all_taxa.pdf", width = 16)
 plot(x)
 dev.off()

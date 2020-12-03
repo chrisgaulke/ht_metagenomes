@@ -1,8 +1,8 @@
 # ht_metagenomes
-Analysis of the performance of different metagenomic library prep protocols
- when applied to variable community types and input concentrations. 
+The purpose of this project is to analyze the performance of different 
+metagenomic library preparation protocols when they applied to variable 
+community types and input concentrations. 
 
----
 ---
 
 ## Structure 

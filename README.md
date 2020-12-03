@@ -19,7 +19,7 @@ order with the exception of combine_data.R, which must be run first to generate
 the input files. The files are: 
 
 1. combine_data.R
-  - combines individual input data files into one data frame and writes out these 
+  : combines individual input data files into one data frame and writes out these 
 data frames
 2. ht_metagenomes_seq_stats.R
   - conducts stats on library and seqeunce quality

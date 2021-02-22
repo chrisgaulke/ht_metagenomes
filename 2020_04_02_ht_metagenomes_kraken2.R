@@ -202,6 +202,20 @@ dev.off()
 
 mock.split$cor <- cor(mock.split$species)
 
+#add p vals
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(mock.split$species)){
+  for(j in 1:ncol(mock.split$species)){
+    temp.cor <- cor.test(mock.split$species[,i], mock.split$species[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+mock.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+
 #make the annotation layer
 ta <-
   HeatmapAnnotation(
@@ -405,6 +419,20 @@ dev.off()
 # Analysis: feces Correlation Heatmap  ------------------------------------
 
 feces.split$cor <- cor(feces.split$species)
+
+#add p vals
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(feces.split$species)){
+  for(j in 1:ncol(feces.split$species)){
+    temp.cor <- cor.test(feces.split$species[,i], feces.split$species[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+feces.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
 
 #make the annotation layer
 ta <-
@@ -613,6 +641,20 @@ dev.off()
 
 soil.split$cor <- cor(soil.split$species)
 
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(soil.split$species)){
+  for(j in 1:ncol(soil.split$species)){
+    temp.cor <- cor.test(soil.split$species[,i], soil.split$species[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+soil.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+
+
 #make the annotation layer
 ta <-
   HeatmapAnnotation(
@@ -816,6 +858,27 @@ dev.off()
 # Analysis: coral Correlation Heatmap  ------------------------------------
 
 coral.split$cor <- cor(coral.split$species)
+
+
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(coral.split$species)){
+  for(j in 1:ncol(coral.split$species)){
+    temp.cor <- cor.test(coral.split$species[,i], coral.split$species[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+coral.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+
+#describe the range of estimates and pvalues generated.
+min(c(coral.cor.df$pval, soil.cor.df$pval,feces.cor.df$pval,mock.cor.df$pval))
+max(c(coral.cor.df$pval, soil.cor.df$pval,feces.cor.df$pval,mock.cor.df$pval))
+
+min(c(coral.cor.df$estimate, soil.cor.df$estimate,feces.cor.df$estimate,mock.cor.df$estimate))
+max(c(coral.cor.df$estimate, soil.cor.df$estimate,feces.cor.df$estimate,mock.cor.df$estimate))
 
 #make the annotation layer
 ta <-

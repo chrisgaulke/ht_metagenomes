@@ -215,6 +215,7 @@ for(i in 1:ncol(mock.split$species)){
 }
 
 mock.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+mock.cor.df$fdr <- p.adjust(mock.cor.df$pval,method = "fdr")
 
 #make the annotation layer
 ta <-
@@ -433,6 +434,7 @@ for(i in 1:ncol(feces.split$species)){
 }
 
 feces.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+feces.cor.df$fdr <- p.adjust(feces.cor.df$pval,method = "fdr")
 
 #make the annotation layer
 ta <-
@@ -653,6 +655,7 @@ for(i in 1:ncol(soil.split$species)){
 }
 
 soil.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+soil.cor.df$fdr <- p.adjust(soil.cor.df$pval,method = "fdr")
 
 
 #make the annotation layer
@@ -872,6 +875,7 @@ for(i in 1:ncol(coral.split$species)){
 }
 
 coral.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+coral.cor.df$fdr <- p.adjust(coral.cor.df$pval,method = "fdr")
 
 #describe the range of estimates and pvalues generated.
 min(c(coral.cor.df$pval, soil.cor.df$pval,feces.cor.df$pval,mock.cor.df$pval))

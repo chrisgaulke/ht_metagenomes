@@ -136,6 +136,20 @@ dev.off()
 
 mock_gene.obj$cor <- cor(mock_gene.obj$genes)
 
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(mock_gene.obj$genes)){
+  for(j in 1:ncol(mock_gene.obj$genes)){
+    temp.cor <- cor.test(mock_gene.obj$genes[,i], mock_gene.obj$genes[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+mockgene.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+mockgene.cor.df$fdr <- p.adjust(mockgene.cor.df$pval,method = "fdr")
+
 #make the annotation layer
 ta <-
   HeatmapAnnotation(
@@ -424,6 +438,20 @@ dev.off()
 
 feces_gene.obj$cor <- cor(feces_gene.obj$genes)
 
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(feces_gene.obj$genes)){
+  for(j in 1:ncol(feces_gene.obj$genes)){
+    temp.cor <- cor.test(feces_gene.obj$genes[,i], feces_gene.obj$genes[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+fecesgene.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+fecesgene.cor.df$fdr <- p.adjust(fecesgene.cor.df$pval,method = "fdr")
+
 #make the annotation layer
 ta <-
   HeatmapAnnotation(
@@ -709,6 +737,20 @@ dev.off()
 # Analysis: soil Correlation Heatmap  ------------------------------------
 
 soil_gene.obj$cor <- cor(soil_gene.obj$genes)
+
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(soil_gene.obj$genes)){
+  for(j in 1:ncol(soil_gene.obj$genes)){
+    temp.cor <- cor.test(soil_gene.obj$genes[,i], soil_gene.obj$genes[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+soilgene.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+soilgene.cor.df$fdr <- p.adjust(soilgene.cor.df$pval,method = "fdr")
 
 #make the annotation layer
 ta <-
@@ -999,6 +1041,20 @@ dev.off()
 # Analysis: coral Correlation Heatmap  ------------------------------------
 
 coral_gene.obj$cor <- cor(coral_gene.obj$genes)
+
+temp.p <- NULL
+temp.e <- NULL
+for(i in 1:ncol(coral_gene.obj$genes)){
+  for(j in 1:ncol(coral_gene.obj$genes)){
+    temp.cor <- cor.test(coral_gene.obj$genes[,i], coral_gene.obj$genes[,j])
+    temp.p <- c(temp.p, temp.cor$p.value)
+    temp.e <- c(temp.e, temp.cor$estimate)
+
+  }
+}
+
+coralgene.cor.df <- data.frame(pval = temp.p, estimate = temp.e)
+coralgene.cor.df$fdr <- p.adjust(coralgene.cor.df$pval,method = "fdr")
 
 #make the annotation layer
 ta <-

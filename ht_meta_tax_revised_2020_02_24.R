@@ -195,6 +195,8 @@ lib_truth_cor.df <- data.frame(type = library_truth_name,
                                estimate = library_truth_est,
                                pval = library_truth_pval)
 
+lib_truth_cor.df$fdr <- p.adjust(lib_truth_cor.df$pval)
+
 lib_truth_cor.df <- lib_truth_cor.df[order(lib_truth_cor.df$type), ]
 #prep data frame for correlation plots
 mock.species_truth.melt <- as.data.frame(t(mock.species))

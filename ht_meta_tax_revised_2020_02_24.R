@@ -256,8 +256,8 @@ mock_corr_plots.plot <-
     legend.title = element_text(size = 18,face = "bold" )
   ) +
   #scale_color_hue(h = c(0,360),l =45, c =100 )+
-  ylab("Count (x 10,000)")+
-  xlab("Count (x 10,000)")+
+  ylab("Counts Per Million Sequences (x 10,000)")+
+  xlab("Counts Per Million Sequences (x 10,000)")+
   labs(shape = "Input (ng)", color= "Method") +
   scale_y_continuous(breaks = c(0,50000,100000,150000,200000),
                      labels = c("0", "5", "10", "15", "20"))+
@@ -394,8 +394,8 @@ mock_corr_plots.plot <-
     legend.title = element_text(size = 18,face = "bold" )
   ) +
   #scale_color_hue(h = c(0,360),l =45, c =100 )+
-  ylab("Count (x 10,000)")+
-  xlab("Count (x 10,000)")+
+  ylab("Counts Per Million Sequences (x 10,000)")+
+  xlab("Counts Per Million Sequences (x 10,000)")+
   labs(shape = "Input (ng)", color= "Method") +
   scale_y_continuous(breaks = c(0,50000,100000,150000,200000),
                      labels = c("0", "5", "10", "15", "20"))+
@@ -410,3 +410,42 @@ x <- ggplot_gtable(mock_corr_plots.build)
 pdf("analysis/figs/mock_metaphlan_taxa_vs_truth_all_taxa.pdf", width = 16)
 plot(x)
 dev.off()
+
+
+# fold_change -------------------------------------------------------------
+
+#Since we are only interested in the elements of the mock community we remove
+#genus level "unclassified" from the melted table. This will remove NaN and inf
+fc_mock <- mock.species_truth.melt
+fc_mock <- fc_mock[grep(fc_mock$variable, pattern = "unclassified",invert = T),]
+
+#calculate fold change
+
+fc_mock$fold_change <- (fc_mock$cpm-fc_mock$theoretical)/  fc_mock$theoretical
+
+
+write.table(x = fc_mock,
+            file = "analysis/flat_files/mock_meta_fc.txt",
+            sep = "\t",
+            quote = F,
+            row.names = F,
+            col.names = T)
+
+
+# alt cor  ----------------------------------------------------------------
+
+X <- NULL
+tmp.est <- NULL
+tmp.pval <- NULL
+
+for( i in 1:ncol(mock.species)){
+  X <- cor.test(mock.species[,i], mock.species[,"truth"], method = "spearman")
+  tmp.est <- c(tmp.est,X$estimate)
+  tmp.pval <- c(tmp.pval, X$p.value)
+}
+
+#note the 1 is the correlation between truth:truth
+
+range(tmp.est)
+table(tmp.est)# rho = 0.88-0.97
+

@@ -126,6 +126,8 @@ mock_gene.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (6.5%)")+
+  xlab("PC1 (17.7%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 
@@ -428,6 +430,8 @@ feces_gene.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (8.2%)")+
+  xlab("PC1 (12.1%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 
@@ -728,6 +732,8 @@ soil_gene.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (6.4%)")+
+  xlab("PC1 (7.8%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 
@@ -1032,6 +1038,8 @@ coral_gene.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (19.9%)")+
+  xlab("PC1 (30.0%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 
@@ -1431,111 +1439,4 @@ scatter_genes.plot +
   xlab("Count (log)")+
   labs(shape = "Input (ng)", color= "Method")
 dev.off()
-
-
-#Crazy talk below here. Lets call this the end of the file.
-
-# # now get the absolute value of the difference here. While I am not sure that
-# # it matters (give abs()) which is subtracted I will use y-x.
-#
-# y05 <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 0.5),])
-# y1  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 1.0),])
-# y5  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == "NexteraFlex Full" & mock_gene.obj$metadata.lm$Input == 5.0),])
-#
-#
-# #add small value to enable the next part
-# mock_gene.obj$genes.lmplus <- mock_gene.obj$genes.lm[] + 0.001
-#
-# #make null df
-#
-# mock_gene_abs.df <- NULL
-#
-# #now populate df
-#
-# for(name in c("NextFlex RAPID XP",
-#               "NexteraFlex Reduced",
-#               "QIASeqFX",
-#               "plexWell96")){
-#
-#   x05 <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 0.5),])
-#   x1  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 1.0),])
-#   x5  <- rownames(mock_gene.obj$metadata.lm[which(mock_gene.obj$metadata.lm$Kit == name & mock_gene.obj$metadata.lm$Input == 5.0),])
-#
-#   name.05 <- paste0(name, "_0.5")
-#   name.1 <- paste0(name, "_1.0")
-#   name.5 <- paste0(name, "_5.0")
-#
-#   #mock_gene_abs.df[[name.05]]  <- (mock_gene.obj$genes.lmplus[,y05] - mock_gene.obj$genes.lmplus[,x05]) / mock_gene.obj$genes.lmplus[,y05]
-#   #mock_gene_abs.df[[name.1]]   <- (mock_gene.obj$genes.lmplus[,y1]  - mock_gene.obj$genes.lmplus[,x1]) / mock_gene.obj$genes.lmplus[,y1]
-#   #mock_gene_abs.df[[name.5]]   <- (mock_gene.obj$genes.lmplus[,y5]  - mock_gene.obj$genes.lmplus[,x5]) / mock_gene.obj$genes.lmplus[,y5]
-#   mock_gene_abs.df[[name.05]]  <-  mock_gene.obj$genes.lmplus[,x05] / mock_gene.obj$genes.lmplus[,y05]
-#   mock_gene_abs.df[[name.1]]   <-  mock_gene.obj$genes.lmplus[,x1] / mock_gene.obj$genes.lmplus[,y1]
-#   mock_gene_abs.df[[name.5]]   <-  mock_gene.obj$genes.lmplus[,x5] / mock_gene.obj$genes.lmplus[,y5]
-# }
-#
-#
-# #now make a data frame
-# mock_gene_abs.df <- as.data.frame(mock_gene_abs.df)
-# rownames(mock_gene_abs.df) <- rownames(mock_gene.obj$genes.lm)
-# mock_gene_abs.df <- t(mock_gene_abs.df)
-# mock_gene_abs.df <- as.data.frame(mock_gene_abs.df)
-#
-# #add metadata
-# mock_gene_abs.df$kit <- rep(c("NextFlex RAPID XP",
-#       "NexteraFlex Reduced",
-#       "QIASeqFX",
-#       "plexWell96"), times = rep (3,4 ))
-#
-# mock_gene_abs.df$input <- rep(c("0.5", "1.0", "5.0"), times = 4)
-#
-# #melt and reorder
-# mock_gene_abs.melt <- melt(mock_gene_abs.df)
-# mock_gene_abs.melt <- mock_gene_abs.melt[order(mock_gene_abs.melt$input),]
-#
-# #now add in the "truth for each
-#
-# mock_gene_abs.melt$y_abundance <- c(rep(mock_gene.obj$genes.lmplus[,y05], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus)))),
-# rep(mock_gene.obj$genes.lmplus[,y1], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus)))),
-# rep(mock_gene.obj$genes.lmplus[,y5], times = rep(4, length(rownames(mock_gene.obj$genes.lmplus))))
-# )
-#
-# #get names of genes with that a 2 sd beyond the mean for a group
-# bottom_limit <- mean(mock_gene_abs.melt$value) - sd(mock_gene_abs.melt$value)*2
-# top_limit    <- mean(mock_gene_abs.melt$value) + sd(mock_gene_abs.melt$value)*2
-#
-# select.families <- unique(mock_gene_abs.melt[which(mock_gene_abs.melt$value < bottom_limit | mock_gene_abs.melt$value > top_limit),"variable"])
-#
-#
-# mock_gene_abs.melt <- mock_gene_abs.melt[which(mock_gene_abs.melt$variable %in% select.families),]
-#
-#
-# mock_gene_abs.plot <- ggplot(mock_gene_abs.melt,
-#                              aes(x = log10(value),
-#                                  y = log10(y_abundance),
-#                                  color = kit,
-#                                  shape = factor(input)))
-#
-#
-# mock_gene_abs.plot +
-#   geom_point(alpha = 0.1) +
-#   facet_wrap(.~input)+
-#   geom_vline(xintercept = -(log10(abs(bottom_limit))), alpha = .7) +
-#   geom_vline(xintercept = log10(top_limit), alpha = .7)
-#
-#
-#
-#
-# mock_gene_abs.plot <- ggplot(mock_gene_abs.melt,
-#                              aes(x = value,
-#                                  y = y_abundance,
-#                                  color = kit,
-#                                  shape = factor(input)))
-#
-#
-# mock_gene_abs.plot +
-#   geom_point(alpha = 0.1) +
-#   facet_wrap(.~input)
-#
-# geom_vline(xintercept = -(log10(abs(bottom_limit))), alpha = .7) +
-#   geom_vline(xintercept = log10(top_limit), alpha = .7)
 

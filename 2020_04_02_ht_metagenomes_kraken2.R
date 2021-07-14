@@ -163,6 +163,13 @@ mock.split$species <- mock.split$df[which(mock.split$df$level == "s"),]
 rownames(mock.split$species) <- mock.split$species$s
 mock.split$species <- mock.split$species[,11:ncol(mock.split$species)]
 
+#normalize by relative abundance
+mock.split$species <- sweep(x = mock.split$species,
+                            MARGIN = 2,
+                            STATS =  colSums(mock.split$species),
+                            FUN = "/"
+                            )
+
 #PCA
 mock.split$pca <- prcomp(t(mock.split$species),scale. = T, center = T)
 mock.split$pca.scores <- data.frame(scores(mock.split$pca)[,1:5],
@@ -193,6 +200,8 @@ mock.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (10.7%)")+
+  xlab("PC1 (21.9%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 
@@ -383,6 +392,13 @@ feces.split$species <- feces.split$df[which(feces.split$df$level == "s"),]
 rownames(feces.split$species) <- feces.split$species$s
 feces.split$species <- feces.split$species[,11:ncol(feces.split$species)]
 
+#normalize by relative abundance
+feces.split$species <- sweep(x = feces.split$species,
+                            MARGIN = 2,
+                            STATS =  colSums(feces.split$species),
+                            FUN = "/"
+)
+
 #PCA
 feces.split$pca <- prcomp(t(feces.split$species),scale. = T, center = T)
 feces.split$pca.scores <- data.frame(scores(feces.split$pca)[,1:5],
@@ -413,6 +429,8 @@ feces.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (7.8%)")+
+  xlab("PC1 (13.8%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 dev.off()
@@ -604,6 +622,15 @@ soil.split$species <- soil.split$df[which(soil.split$df$level == "s"),]
 rownames(soil.split$species) <- soil.split$species$s
 soil.split$species <- soil.split$species[,11:ncol(soil.split$species)]
 
+#normalize by relative abundance
+soil.split$species <- sweep(x = soil.split$species,
+                            MARGIN = 2,
+                            STATS =  colSums(soil.split$species),
+                            FUN = "/"
+)
+
+
+
 #PCA
 soil.split$pca <- prcomp(t(soil.split$species),scale. = T, center = T)
 soil.split$pca.scores <- data.frame(scores(soil.split$pca)[,1:5],
@@ -634,6 +661,8 @@ soil.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (5.8%)")+
+  xlab("PC1 (15.3%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
 
@@ -824,6 +853,14 @@ coral.split$species <- coral.split$df[which(coral.split$df$level == "s"),]
 rownames(coral.split$species) <- coral.split$species$s
 coral.split$species <- coral.split$species[,11:ncol(coral.split$species)]
 
+#normalize by relative abundance
+coral.split$species <- sweep(x = coral.split$species,
+                             MARGIN = 2,
+                             STATS =  colSums(coral.split$species),
+                             FUN = "/"
+)
+
+
 #PCA
 coral.split$pca <- prcomp(t(coral.split$species),scale. = T, center = T)
 coral.split$pca.scores <- data.frame(scores(coral.split$pca)[,1:5],
@@ -854,10 +891,12 @@ coral.pca_plot +
         legend.key       = element_blank() ,
         legend.text      = element_text(size  = 16)
   ) +
+  ylab("PC2 (9.3%)")+
+  xlab("PC1 (20.1%)")+
   scale_color_brewer("Kit", palette = "Dark2",direction = 1)+
   scale_shape_discrete("Input (ng)")
-
 dev.off()
+
 # Analysis: coral Correlation Heatmap  ------------------------------------
 
 coral.split$cor <- cor(coral.split$species)
@@ -1052,7 +1091,10 @@ feces_kraken2.adonis <- adonis(t(feces.split$species) ~ feces.split$metadata$Kit
 soil_kraken2.adonis  <- adonis(t(soil.split$species) ~  soil.split$metadata$Kit  * soil.split$metadata$Input,permutations = 5000)
 coral_kraken2.adonis <- adonis(t(coral.split$species) ~ coral.split$metadata$Kit * coral.split$metadata$Input,permutations = 5000)
 
-
+mock_kraken2.adonis
+feces_kraken2.adonis
+soil_kraken2.adonis
+coral_kraken2.adonis
 # Analysis: intra-individual variation ------------------------------------
 
 mock_kraken2_intra.kruskal <- kruskal.test(mock.split$dist.intra$value, g= factor(mock.split$dist.intra$v1kit))
@@ -1060,7 +1102,14 @@ feces_kraken2_intra.kruskal <- kruskal.test(feces.split$dist.intra$value, g= fac
 soil_kraken2_intra.kruskal <- kruskal.test(soil.split$dist.intra$value, g= factor(soil.split$dist.intra$v1kit))
 coral_kraken2_intra.kruskal <- kruskal.test(coral.split$dist.intra$value, g= factor(coral.split$dist.intra$v1kit))
 
+
+mock_kraken2_intra.kruskal
+feces_kraken2_intra.kruskal
+soil_kraken2_intra.kruskal
+coral_kraken2_intra.kruskal
+
 pairwise.t.test(feces.split$dist.inter$value, g= factor(feces.split$dist.inter$v1kit))
+pairwise.t.test(soil.split$dist.inter$value, g= factor(soil.split$dist.inter$v1kit))
 
 
 # Analysis: inter-individual variation ------------------------------------
@@ -1070,5 +1119,11 @@ feces_kraken2_inter.kruskal <- kruskal.test(feces.split$dist.inter$value, g= fac
 soil_kraken2_inter.kruskal <- kruskal.test(soil.split$dist.inter$value, g= factor(soil.split$dist.inter$v1kit))
 coral_kraken2_inter.kruskal <- kruskal.test(coral.split$dist.inter$value, g= factor(coral.split$dist.inter$v1kit))
 
-#coral had some significance
-pairwise.t.test(coral.split$dist.inter$value, g= factor(coral.split$dist.inter$v1kit))
+mock_kraken2_inter.kruskal
+feces_kraken2_inter.kruskal
+soil_kraken2_inter.kruskal
+coral_kraken2_inter.kruskal
+
+pairwise.t.test(soil.split$dist.inter$value, g= factor(soil.split$dist.inter$v1kit))
+pairwise.t.test(feces.split$dist.inter$value, g= factor(feces.split$dist.inter$v1kit))
+pairwise.t.test(mock.split$dist.inter$value, g= factor(mock.split$dist.inter$v1kit))
